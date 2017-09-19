@@ -7,8 +7,8 @@
 
 namespace Bounce\Emitter\Acceptor;
 
-use Bounce\Emitter\MappedListener\Collection\MappedListenerCollectionInterface;
-use Bounce\EMitter\MappedListener\Collection\MappedListeners;
+use Bounce\Emitter\Collection\MappedListenerCollectionInterface;
+use Bounce\EMitter\Collection\MappedListeners;
 use Bounce\Emitter\MappedListener\MappedListenerInterface;
 use Bounce\Emitter\Middleware\AcceptorMiddlewareInterface;
 use EventIO\InterOp\EventInterface;
@@ -16,8 +16,7 @@ use EventIO\InterOp\ListenerInterface;
 use Generator;
 
 /**
- * Class Acceptor
- * @package Bounce\Bounce\Acceptor
+ * Class Acceptor.
  */
 final class Acceptor implements AcceptorInterface
 {
@@ -89,15 +88,15 @@ final class Acceptor implements AcceptorInterface
     /**
      * @param $eventName
      * @param iterable $listeners
-     * @param int $priority
+     * @param int      $priority
+     *
      * @return Acceptor
      */
     public function addListeners(
         $eventName,
         iterable $listeners,
         $priority = self::PRIORITY_NORMAL
-    ): Acceptor
-    {
+    ): Acceptor {
         $mappedListeners = $this->mapListeners(
             $eventName,
             $listeners,
@@ -112,7 +111,8 @@ final class Acceptor implements AcceptorInterface
     /**
      * @param $eventName
      * @param iterable $listeners
-     * @param int $priority
+     * @param int      $priority
+     *
      * @return Generator
      */
     private function mapListeners(
@@ -133,6 +133,7 @@ final class Acceptor implements AcceptorInterface
      * @param $eventName
      * @param $listener
      * @param int $priority
+     *
      * @return MappedListenerInterface
      */
     private function mapListener(

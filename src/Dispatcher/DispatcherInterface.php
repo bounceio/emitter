@@ -4,6 +4,7 @@
  * @copyright    Barney Hanlon 2017
  * @license      https://opensource.org/licenses/MIT
  */
+
 namespace Bounce\Emitter\Dispatcher;
 
 use Bounce\Emitter\Acceptor\AcceptorInterface;

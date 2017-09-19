@@ -19,6 +19,7 @@ final class EventQueue implements EventQueueInterface
 
     /**
      * @param iterable $events Events to queue
+     *
      * @return EventQueue
      */
     public static function create(iterable $events = null)
@@ -47,15 +48,17 @@ final class EventQueue implements EventQueueInterface
 
     /**
      * @param EventInterface[] ...$events
+     *
      * @return EventQueueInterface
      */
-    public function queueEvent( ...$events): EventQueueInterface
+    public function queueEvent(...$events): EventQueueInterface
     {
         return $this->queueEvents($events);
     }
 
     /**
      * @param iterable $events
+     *
      * @return EventQueueInterface
      */
     public function queueEvents(iterable $events): EventQueueInterface

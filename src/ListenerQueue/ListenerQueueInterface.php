@@ -4,18 +4,19 @@
  * @copyright    Barney Hanlon 2017
  * @license      https://opensource.org/licenses/MIT
  */
+
 namespace Bounce\Emitter\ListenerQueue;
 
 use Bounce\Emitter\MappedListener\MappedListenerInterface;
 
 /**
- * Interface ListenerQueueInterface
- * @package Bounce\Bounce\MappedListener\Queue
+ * Interface ListenerQueueInterface.
  */
 interface ListenerQueueInterface
 {
     /**
      * @param MappedListenerInterface[] ...$mappedListeners
+     *
      * @return mixed
      */
     public function queue(MappedListenerInterface ...$mappedListeners);

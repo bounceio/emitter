@@ -1,4 +1,5 @@
 <?php
+
 namespace Bounce\Emitter\DispatchLoop;
 
 use EventIO\InterOp\EventInterface;
@@ -6,8 +7,7 @@ use EventIO\InterOp\ListenerInterface;
 use Generator;
 
 /**
- * Class DispatchLoop
- * @package Bounce\Bounce\DispatchLoop
+ * Class DispatchLoop.
  */
 class DispatchLoop
 {
@@ -22,7 +22,7 @@ class DispatchLoop
     private $listeners;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $dispatching;
 
@@ -34,6 +34,7 @@ class DispatchLoop
     public static function fromDto($dto): self
     {
         $acceptor = $dto->acceptor;
+
         return new self($dto->event, $acceptor);
     }
 
@@ -71,7 +72,7 @@ class DispatchLoop
     }
 
     /**
-     * Dispatch an event to the listeners
+     * Dispatch an event to the listeners.
      */
     private function dispatchEventToListeners()
     {
@@ -108,5 +109,4 @@ class DispatchLoop
     {
         return (!$this->event->isPropagationStopped()) && $listeners->valid();
     }
-
 }

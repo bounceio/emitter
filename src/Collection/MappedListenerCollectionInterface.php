@@ -17,6 +17,7 @@ interface MappedListenerCollectionInterface
 {
     /**
      * @param MappedListenerInterface[] ...$mappedListener
+     *
      * @return mixed
      */
     public function add(MappedListenerInterface ...$mappedListener);

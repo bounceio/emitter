@@ -16,8 +16,7 @@ use EventIO\InterOp\EventInterface;
 use stdClass;
 
 /**
- * Class Dispatcher
- * @package Bounce\Bounce\Dispatcher
+ * Class Dispatcher.
  */
 final class Dispatcher implements DispatcherInterface
 {
@@ -99,8 +98,7 @@ final class Dispatcher implements DispatcherInterface
     public function dispatch(
         AcceptorInterface $acceptor,
         iterable $events = []
-    ): DispatcherInterface  {
-
+    ): DispatcherInterface {
         $this->queueEvents($events);
 
         if (!$this->isDispatching()) {
@@ -118,7 +116,7 @@ final class Dispatcher implements DispatcherInterface
     }
 
     /**
-     * @param mixed $event The event to dispatch through listeners
+     * @param mixed             $event    The event to dispatch through listeners
      * @param AcceptorInterface $acceptor
      */
     private function dispatchEvent(

@@ -7,15 +7,14 @@
 
 namespace Bounce\Emitter\Collection;
 
-use Bounce\Bounce\MappedListener\Queue\ListenerQueueInterface;
-use Bounce\Emitter\MappedListener\Filter\EventListeners;
+use Bounce\Emitter\ListenerQueue\DsListenerQueue;
+use Bounce\Emitter\ListenerQueue\ListenerQueueInterface;
 use Bounce\Emitter\MappedListener\MappedListenerInterface;
 use Ds\Set;
 use EventIO\InterOp\EventInterface;
 
 /**
- * Class MappedListeners
- * @package Bounce\Bounce\MappedListener\Collection
+ * Class MappedListeners.
  */
 class MappedListeners implements MappedListenerCollectionInterface
 {
@@ -25,33 +24,39 @@ class MappedListeners implements MappedListenerCollectionInterface
     private $mappedListeners;
 
     /**
-     * @var \Bounce\Bounce\MappedListener\Queue\ListenerQueueInterface
+     * @var \Bounce\Emitter\ListenerQueue\ListenerQueueInterface
      */
     private $queue;
 
     private $filter;
 
     /**
-     * @param \Bounce\Bounce\MappedListener\Queue\ListenerQueueInterface $queue
-     * @param                                                    $filter
+     * @param \Bounce\Emitter\ListenerQueue\ListenerQueueInterface $queue
+     * @param                                                      $filter
      *
-     * @return \Bounce\Bounce\MappedListener\Collection\MappedListeners
+     * @return \Bounce\Emitter\Collection\MappedListeners
      */
-    public static function create(ListenerQueueInterface $queue, $filter): self
-    {
+    public static function create(
+        callable $filter,
+        ListenerQueueInterface $queue = null
+    ): self {
+        if (!$queue) {
+            $queue = new DsListenerQueue();
+        }
+
         return new self($queue, $filter);
     }
 
     /**
      * MappedListeners constructor.
      *
-     * @param \Bounce\Bounce\MappedListener\Queue\ListenerQueueInterface $queue
-     * @param                                                    $filter
-     *
-     * @internal param iterable $mappedListeners
+     * @param \Bounce\Emitter\ListenerQueue\ListenerQueueInterface $queue
+     * @param                                                      $filter
      */
-    private function __construct(ListenerQueueInterface $queue, $filter)
-    {
+    private function __construct(
+        ListenerQueueInterface $queue,
+        callable $filter
+    ) {
         $this->mappedListeners = new Set();
         $this->filter          = $filter;
         $this->queue           = $queue;
@@ -90,7 +95,7 @@ class MappedListeners implements MappedListenerCollectionInterface
     /**
      * @param \EventIO\InterOp\EventInterface $event
      *
-     * @return \Bounce\Bounce\MappedListener\Queue\PriorityListenerQueue
+     * @return \Bounce\Emitter\ListenerQueue\ListenerQueueInterface
      */
     private function queueFor(EventInterface $event): ListenerQueueInterface
     {
@@ -104,6 +109,7 @@ class MappedListeners implements MappedListenerCollectionInterface
 
     /**
      * @param EventInterface $event
+     *
      * @return mixed
      */
     private function queuedListenersFor(EventInterface $event)
@@ -112,6 +118,4 @@ class MappedListeners implements MappedListenerCollectionInterface
             $this->filter->filter($event)
         );
     }
-
-
 }

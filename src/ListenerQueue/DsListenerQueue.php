@@ -12,8 +12,7 @@ use Ds\PriorityQueue as DsPriorityQueue;
 use Ds\Set;
 
 /**
- * Class DsListenerQueue
- * @package Bounce\Bounce\MappedListener\Queue
+ * Class DsListenerQueue.
  */
 class DsListenerQueue implements ListenerQueueInterface
 {
@@ -24,6 +23,7 @@ class DsListenerQueue implements ListenerQueueInterface
 
     /**
      * DsListenerQueue constructor.
+     *
      * @param iterable $mappedListeners
      */
     public function __construct(iterable $mappedListeners = [])
@@ -45,6 +45,7 @@ class DsListenerQueue implements ListenerQueueInterface
 
     /**
      * @param MappedListenerInterface[] ...$mappedListeners
+     *
      * @return mixed
      */
     public function queue(MappedListenerInterface ...$mappedListeners)
@@ -54,6 +55,7 @@ class DsListenerQueue implements ListenerQueueInterface
 
     /**
      * @param iterable $mappedListeners
+     *
      * @return $this
      */
     public function queueListeners(iterable $mappedListeners)

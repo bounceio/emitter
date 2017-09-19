@@ -9,7 +9,6 @@ namespace Bounce\Emitter;
 
 use Bounce\Emitter\Acceptor\AcceptorInterface;
 use Bounce\Emitter\Dispatcher\DispatcherInterface;
-
 use EventIO\InterOp\EmitterInterface;
 use EventIO\InterOp\EventInterface;
 use EventIO\InterOp\ListenerAcceptorInterface;
@@ -66,7 +65,8 @@ final class Emitter implements EmitterInterface, ListenerAcceptorInterface
     /**
      * @param $eventName
      * @param iterable $listeners
-     * @param int $priority
+     * @param int      $priority
+     *
      * @return $this
      */
     public function addListeners(
@@ -74,7 +74,6 @@ final class Emitter implements EmitterInterface, ListenerAcceptorInterface
         iterable $listeners,
         $priority = self::PRIORITY_NORMAL
     ): self {
-
         $this->acceptor->addListeners($eventName, $listeners, $priority);
 
         return $this;
