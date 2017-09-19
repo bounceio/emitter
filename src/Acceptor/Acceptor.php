@@ -8,7 +8,7 @@
 namespace Bounce\Emitter\Acceptor;
 
 use Bounce\Emitter\Collection\MappedListenerCollectionInterface;
-use Bounce\EMitter\Collection\MappedListeners;
+use Bounce\Emitter\Collection\MappedListeners;
 use Bounce\Emitter\MappedListener\MappedListenerInterface;
 use Bounce\Emitter\Middleware\AcceptorMiddlewareInterface;
 use EventIO\InterOp\EventInterface;
@@ -34,10 +34,6 @@ final class Acceptor implements AcceptorInterface
         AcceptorMiddlewareInterface $middleware,
         MappedListenerCollectionInterface $mappedListeners
     ) {
-        if (!$mappedListeners) {
-            $mappedListeners = MappedListeners::create();
-        }
-
         return new self($middleware, $mappedListeners);
     }
 
@@ -51,8 +47,8 @@ final class Acceptor implements AcceptorInterface
         AcceptorMiddlewareInterface       $middleware,
         MappedListenerCollectionInterface $mappedListeners
     ) {
-        $this->middleware       = $middleware;
-        $this->mappedListeners  = $mappedListeners;
+        $this->middleware      = $middleware;
+        $this->mappedListeners = $mappedListeners;
     }
 
     public function __invoke(EventInterface $event)
