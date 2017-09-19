@@ -35,8 +35,8 @@ final class EmitterServiceProvider implements
 
         $pimple[self::MAPPED_LISTENER_COLLECTION] = function (Container $con) {
             return MappedListeners::create(
-                $con['bounce.mapped_listeners.queue'],
-                $con['bounce.mapped_listeners.filter']
+                $con['bounce.mapped_listeners.filter'],
+                $con['bounce.mapped_listeners.queue']
             );
         };
 
