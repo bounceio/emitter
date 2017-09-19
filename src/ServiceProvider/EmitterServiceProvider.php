@@ -6,20 +6,15 @@ use Bounce\Emitter\Acceptor\Acceptor;
 use Bounce\Emitter\Collection\MappedListeners;
 use Bounce\Emitter\Dispatcher\Dispatcher;
 use Bounce\Emitter\Emitter;
+use Bounce\Emitter\Filter\EventListeners;
 use Bounce\Emitter\ListenerQueue\DsListenerQueue;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
-class EmitterServiceProvider implements ServiceProviderInterface
+final class EmitterServiceProvider implements
+    ServiceProviderInterface,
+    EmitterServiceProviderInterface
 {
-    const EMITTER                       = 'bounce.emitter';
-    const ACCEPTOR                      = 'bounce.acceptor';
-    const ACCEPTOR_MIDDLEWARE           = self::ACCEPTOR.'.middleware';
-    const DISPATCHER                    = 'bounce.dispatcher';
-    const DISPATCHER_MIDDLEWARE         = self::DISPATCHER.'.middleware';
-
-    const MAPPED_LISTENER_COLLECTION    = 'bounce.collection.mapped_listeners';
-
     /**
      * Registers services on the given container.
      *
@@ -30,11 +25,11 @@ class EmitterServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $pimple)
     {
-        $pimple['bounce.mapped_listeners.filter'] = function () {
+        $pimple['bounce.mapped_listeners.filter'] = function (): EventListeners {
             return new EventListeners();
         };
 
-        $pimple['bounce.mapped_listeners.queue'] = function () {
+        $pimple['bounce.mapped_listeners.queue'] = function (): DsListenerQueue {
             return new DsListenerQueue();
         };
 
@@ -45,20 +40,20 @@ class EmitterServiceProvider implements ServiceProviderInterface
             );
         };
 
-        $pimple[self::ACCEPTOR] = function (Container $con) {
+        $pimple[self::ACCEPTOR] = function (Container $con): Acceptor {
             return Acceptor::create(
                 $con[self::ACCEPTOR_MIDDLEWARE],
                 $con[self::MAPPED_LISTENER_COLLECTION]
             );
         };
 
-        $pimple[self::DISPATCHER] = function (Container $con) {
+        $pimple[self::DISPATCHER] = function (Container $con): Dispatcher {
             return Dispatcher::create(
                 $con[self::DISPATCHER_MIDDLEWARE]
             );
         };
 
-        $pimple[self::EMITTER] = function (Container $con) {
+        $pimple[self::EMITTER] = function (Container $con): Emitter {
             return new Emitter(
                 $con[self::ACCEPTOR],
                 $con[self::DISPATCHER]

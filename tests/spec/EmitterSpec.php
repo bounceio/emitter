@@ -17,9 +17,9 @@ class EmitterSpec extends ObjectBehavior
 {
     function let(
         AcceptorInterface $acceptor,
-        EmitterMiddlewareInterface $middleware
+        DispatcherInterface $dispatcher
     ) {
-        $this->beConstructedWith($acceptor, $middleware);
+        $this->beConstructedWith($acceptor, $dispatcher);
     }
 
     function it_is_an_event_emitter()
