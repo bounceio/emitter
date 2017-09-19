@@ -1,0 +1,51 @@
+{
+  "name": "bounce/emitter",
+  "description": "PHP 7 event emitter allowing for event queues, middleware, and fuzzy event matching",
+  "type": "library",
+  "keywords": ["event", "emitter", "event bus"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Barney Hanlon",
+      "email": "barney@shrikeh.net"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Bounce\\Cartographer\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Features\\Bounce\\Bounce\\": "tests/behat/bootstrap"
+    }
+  },
+  "provide": {
+    "eventbus-interop/eventbus-interop": "^0.1"
+  },
+  "require": {
+    "php": ">= 7.1",
+    "eventbus-interop/eventbus-interop": "^0.1",
+    "php-ds/php-ds": "^1.2",
+    "pimple/pimple": "^3.2"
+  },
+  "require-dev": {
+    "behat/behat": "^3.3",
+    "escapestudios/symfony2-coding-standard": "^3.0",
+    "friendsofphp/php-cs-fixer": "^2.5",
+    "phpspec/phpspec": "^4.0",
+    "symfony/dotenv": "^3.3"
+  },
+  "suggest": {
+    "ext-ds": "to improve performance and reduce memory usage"
+  },
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "bin-dir": "bin",
+    "sort-packages": true
+  },
+  "archive": {
+    "exclude": ["*", "!/src"]
+  }
+}
