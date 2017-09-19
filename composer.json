@@ -12,12 +12,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Bounce\\Cartographer\\": "src"
+      "Bounce\\Emitter\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Features\\Bounce\\Bounce\\": "tests/behat/bootstrap"
+      "Features\\Bounce\\Emitter\\": "tests/behat/bootstrap"
     }
   },
   "provide": {

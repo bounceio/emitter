@@ -62,12 +62,13 @@ final class Dispatcher implements DispatcherInterface
         EventQueueInterface $queue,
         DispatcherMiddlewareInterface $dispatcherMiddleware
     ) {
-        $this->queue        = $queue;
-        $this->middleware   = $dispatcherMiddleware;
+        $this->queue = $queue;
+        $this->middleware = $dispatcherMiddleware;
     }
 
     /**
      * @param EventInterface[] ...$events
+     *
      * @return DispatcherInterface
      */
     public function enqueue(...$events): DispatcherInterface
