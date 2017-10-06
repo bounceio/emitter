@@ -9,7 +9,7 @@ use Generator;
 /**
  * Class DispatchLoop.
  */
-class DispatchLoop
+class DispatchLoop implements DispatchLoopInterface
 {
     /**
      * @var EventInterface
@@ -42,7 +42,7 @@ class DispatchLoop
      * DispatchLoop constructor.
      *
      * @param EventInterface $event
-     * @param iterable       $listeners
+     * @param callable       $listeners
      */
     public function __construct(EventInterface $event, callable $listeners)
     {
@@ -53,18 +53,17 @@ class DispatchLoop
     /**
      * @return bool
      */
-    public function isDispatching()
+    public function isDispatching(): bool
     {
         return $this->dispatching;
     }
 
     /**
-     * @return $this
+     * @return \Bounce\Emitter\DispatchLoop\DispatchLoopInterface
      */
-    public function dispatch()
+    public function dispatch(): DispatchLoopInterface
     {
         $this->dispatching = true;
-
         $this->dispatchEventToListeners();
         $this->dispatching = false;
 
@@ -105,6 +104,11 @@ class DispatchLoop
         $listener->handle($this->event);
     }
 
+    /**
+     * @param \Generator $listeners
+     *
+     * @return bool
+     */
     private function continueDispatching(Generator $listeners)
     {
         return (!$this->event->isPropagationStopped()) && $listeners->valid();

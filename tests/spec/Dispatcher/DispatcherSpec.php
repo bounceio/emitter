@@ -7,15 +7,13 @@ use Bounce\Emitter\Acceptor\AcceptorInterface;
 use Bounce\Emitter\Dispatcher\DispatcherInterface;
 use Bounce\Emitter\Event\Named;
 use Bounce\Emitter\Listener\CallableListener;
-use Bounce\Emitter\Map\Glob;
-use Bounce\Emitter\Middleware\DispatcherMiddlewareInterface;
 use EventIO\InterOp\EventInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class DispatcherSpec extends ObjectBehavior
 {
-    function let(DispatcherMiddlewareInterface $middleware)
+    function let(callable $middleware)
     {
         $this->beConstructedThroughCreate($middleware);
     }

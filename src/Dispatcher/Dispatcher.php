@@ -9,6 +9,7 @@ namespace Bounce\Emitter\Dispatcher;
 
 use Bounce\Emitter\Acceptor\AcceptorInterface;
 use Bounce\Emitter\DispatchLoop\DispatchLoop;
+use Bounce\Emitter\DispatchLoop\DispatchLoop2;
 use Bounce\Emitter\EventQueue\EventQueue;
 use Bounce\Emitter\EventQueue\EventQueueInterface;
 use Bounce\Emitter\Middleware\DispatcherMiddlewareInterface;
@@ -147,9 +148,10 @@ final class Dispatcher implements DispatcherInterface
      */
     private function createDispatchLoop($event, $acceptor): DispatchLoop
     {
-        $dispatchLoop               = new stdClass();
-        $dispatchLoop->event        = $event;
-        $dispatchLoop->acceptor     = $acceptor;
+        $dispatchLoop = new DispatchLoop2(
+            $event,
+            $acceptor
+        );
 
         return $this->middleware->dispatch($dispatchLoop);
     }

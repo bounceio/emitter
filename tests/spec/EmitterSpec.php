@@ -34,17 +34,14 @@ class EmitterSpec extends ObjectBehavior
 
     function it_dispatches_a_single_event(
         EventInterface $event,
-        $acceptor,
-        $middleware
+        AcceptorInterface $acceptor
     ) {
         $eventName = 'foo';
         $listener = new CallableListener(function(){});
 
-        $middleware->queue($event)->willReturn($event);
-
         $acceptor->addListener($eventName, $listener, ListenerAcceptorInterface::PRIORITY_NORMAL)
             ->shouldBeCalled();
-        $acceptor->listenersFor($event)->will(function() use($listener) {
+        $acceptor->listenersFor($eventName)->will(function() use($listener) {
            yield $listener;
         });
 
@@ -55,13 +52,9 @@ class EmitterSpec extends ObjectBehavior
         EventInterface $firstEvent,
         EventInterface $secondEvent,
         EventInterface $thirdEvent,
-        $acceptor,
-        $middleware
+        $acceptor
     ) {
         $listeners = new ArrayIterator([]);
-
-        $middleware->queue(Argument::type(EventInterface::class))
-            ->willReturn($firstEvent, $secondEvent, $thirdEvent);
 
         $acceptor->listenersFor($firstEvent)->willReturn($listeners)
             ->shouldBeCalled();

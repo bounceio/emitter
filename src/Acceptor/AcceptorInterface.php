@@ -16,6 +16,13 @@ use EventIO\InterOp\ListenerAcceptorInterface;
 interface AcceptorInterface extends ListenerAcceptorInterface
 {
     /**
+     * @param \EventIO\InterOp\EventInterface $event
+     *
+     * @return iterable
+     */
+    public function __invoke(EventInterface $event): iterable;
+
+    /**
      * @param EventInterface $event
      *
      * @return iterable

@@ -8,9 +8,7 @@
 namespace Bounce\Emitter\Acceptor;
 
 use Bounce\Emitter\Collection\MappedListenerCollectionInterface;
-use Bounce\Emitter\Collection\MappedListeners;
 use Bounce\Emitter\MappedListener\MappedListenerInterface;
-use Bounce\Emitter\Middleware\AcceptorMiddlewareInterface;
 use EventIO\InterOp\EventInterface;
 use EventIO\InterOp\ListenerInterface;
 use Generator;
@@ -21,7 +19,7 @@ use Generator;
 final class Acceptor implements AcceptorInterface
 {
     /**
-     * @var AcceptorMiddlewareInterface
+     * @var callable
      */
     private $middleware;
 
@@ -31,27 +29,32 @@ final class Acceptor implements AcceptorInterface
     private $mappedListeners;
 
     public static function create(
-        AcceptorMiddlewareInterface $middleware,
-        MappedListenerCollectionInterface $mappedListeners
+        MappedListenerCollectionInterface $mappedListeners,
+        callable $middleware
     ) {
-        return new self($middleware, $mappedListeners);
+        return new self($mappedListeners, $middleware);
     }
 
     /**
      * Acceptor constructor.
      *
-     * @param AcceptorMiddlewareInterface       $middleware
-     * @param MappedListenerCollectionInterface $mappedListeners
+     * @param \Bounce\Emitter\Collection\MappedListenerCollectionInterface $mappedListeners
+     * @param callable                                                     $middleware
      */
     private function __construct(
-        AcceptorMiddlewareInterface       $middleware,
-        MappedListenerCollectionInterface $mappedListeners
+        MappedListenerCollectionInterface $mappedListeners,
+        callable $middleware
     ) {
         $this->middleware      = $middleware;
         $this->mappedListeners = $mappedListeners;
     }
 
-    public function __invoke(EventInterface $event)
+    /**
+     * @param \EventIO\InterOp\EventInterface $event
+     *
+     * @return iterable
+     */
+    public function __invoke(EventInterface $event): iterable
     {
         return $this->listenersFor($event);
     }
@@ -137,7 +140,9 @@ final class Acceptor implements AcceptorInterface
         $listener,
         $priority = self::PRIORITY_NORMAL
     ): MappedListenerInterface {
-        return $this->middleware->listenerAdd(
+        $middleware = $this->middleware;
+
+        return $middleware(
             $eventName,
             $listener,
             $priority

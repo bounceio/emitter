@@ -42,8 +42,8 @@ final class EmitterServiceProvider implements
 
         $pimple[self::ACCEPTOR] = function (Container $con): Acceptor {
             return Acceptor::create(
-                $con[self::ACCEPTOR_MIDDLEWARE],
-                $con[self::MAPPED_LISTENER_COLLECTION]
+                $con[self::MAPPED_LISTENER_COLLECTION],
+                $con[self::ACCEPTOR_MIDDLEWARE]
             );
         };
 

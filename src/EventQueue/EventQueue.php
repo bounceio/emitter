@@ -7,7 +7,7 @@
 
 namespace Bounce\Emitter\EventQueue;
 
-use Ds\Queue;
+use Ds\PriorityQueue;
 use EventIO\InterOp\EventInterface;
 
 final class EventQueue implements EventQueueInterface
@@ -24,7 +24,7 @@ final class EventQueue implements EventQueueInterface
      */
     public static function create(iterable $events = null)
     {
-        $queue = new Queue();
+        $queue = new PriorityQueue();
 
         $eventQueue = new self($queue);
         if ($events) {
@@ -39,9 +39,9 @@ final class EventQueue implements EventQueueInterface
     /**
      * EventQueue constructor.
      *
-     * @param \Ds\Queue $queue A Queue to put events into
+     * @param \Ds\PriorityQueue $queue A Queue to put events into
      */
-    private function __construct(Queue $queue)
+    private function __construct(PriorityQueue $queue)
     {
         $this->queue = $queue;
     }
